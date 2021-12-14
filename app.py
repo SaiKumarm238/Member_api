@@ -1,5 +1,5 @@
 from flask import Flask, request, g, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from database import get_db
 from functools import wraps
 
@@ -25,6 +25,7 @@ def close_db(error):
         g.sqlite_db.close()
 
 @app.route('/member', methods=['GET'])
+@cross_origin()
 @protected
 def get_members():
     db = get_db()
@@ -45,6 +46,7 @@ def get_members():
     return jsonify({'members': return_values})
 
 @app.route('/member/<int:member_id>', methods=['GET'])
+@cross_origin()
 @protected
 def get_member(member_id):
 
@@ -62,6 +64,7 @@ def get_member(member_id):
     return jsonify({"member": member_dict})
 
 @app.route('/member', methods=['POST'])
+@cross_origin()
 @protected
 def add_member():
 
@@ -82,6 +85,7 @@ def add_member():
     return jsonify({"members" : {'id' : str(new_member['id']), 'name': new_member['name'], 'email': new_member['email'], 'level': new_member['level']}})
 
 @app.route('/member/<int:member_id>', methods=['PUT','PATCH'])
+@cross_origin()
 @protected
 def edit_member(member_id):
 
@@ -109,6 +113,7 @@ def edit_member(member_id):
     return jsonify({"member": new_member_dict})
 
 @app.route('/member/<int:member_id>', methods=['DELETE'])
+@cross_origin()
 @protected
 def delete_member(member_id):
 
