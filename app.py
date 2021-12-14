@@ -1,8 +1,10 @@
 from flask import Flask, request, g, jsonify
+from flask_cors import CORS
 from database import get_db
 from functools import wraps
 
 app = Flask(__name__)
+CORS(app)
 
 api_username = 'admin'
 api_password = '10031'
